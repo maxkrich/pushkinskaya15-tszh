@@ -188,6 +188,22 @@ p { margin: 0 0 var(--space-2); }
   border: 0;
 }
 
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: var(--space-2);
+  z-index: 100;
+  background: var(--navy);
+  color: var(--paper);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: var(--space-2);
+}
+
 /* ── Header / nav ─────────────────────────────────────────── */
 
 .site-header {
@@ -255,6 +271,11 @@ main {
   color: var(--ink-soft);
 }
 
+.hero-note {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
 .updated {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -298,7 +319,9 @@ main {
 /* ── Блок «Если коротко» (аномалии на главной) ───────────── */
 
 .anomaly-strip {
-  margin-top: var(--space-4);
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
@@ -352,10 +375,12 @@ main {
 }
 
 .pointer-grid {
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-3);
-  margin-top: var(--space-5);
 }
 @media (max-width: 640px) {
   .pointer-grid { grid-template-columns: 1fr; }
@@ -530,6 +555,30 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
   top: 0;
   background: var(--paper-alt);
 }
+/* Sticky first column so the row's topic stays visible while scrolling
+   horizontally on mobile — the background has to match whatever the row
+   would otherwise show (plain, hover, or status-tinted) or content would
+   show through the seam. */
+.compare-table td:first-child,
+.compare-table th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--paper);
+}
+.compare-table thead th:first-child {
+  z-index: 2;
+  background: var(--paper-alt);
+}
+.compare-table tbody tr:hover td:first-child {
+  background: var(--paper-alt);
+}
+.compare-table tbody tr:has(> td .status-tag[data-status="needs-check"]) td:first-child {
+  background: var(--needs-check-bg);
+}
+.compare-table tbody tr:has(> td .status-tag[data-status="pending"]) td:first-child {
+  background: var(--pending-bg);
+}
 .compare-table td:first-child a {
   font-weight: 600;
   text-decoration: none;
@@ -582,6 +631,31 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
   padding: var(--space-3);
   margin: var(--space-2) 0 var(--space-4);
   font-size: 0.95rem;
+}
+
+.dovod-index {
+  background: var(--paper-alt);
+  border: 1px solid var(--slate-line);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-2) 0 var(--space-5);
+}
+.dovod-index-title {
+  margin: 0 0 var(--space-2);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.dovod-index ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2) var(--space-3);
+}
+.dovod-index li { font-size: 0.9rem; }
+@media (max-width: 480px) {
+  .dovod-index ul { grid-template-columns: 1fr; }
 }
 
 /* ── График (норма vs факт) ───────────────────────────────── */

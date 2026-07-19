@@ -126,6 +126,8 @@ A cool, desaturated palette — paper is grey-white, not cream; the only saturat
 - **Title / H3** (600, 1.15rem, 1.2): card and sub-section titles; inside `.registry-card`, right-margin-cleared to leave room for the stamp.
 - **Body** (400, 17px, 1.6): all prose. `main` caps at 760px (712px after padding), which works out to roughly 76–84ch at this font's average character width — at or just past the 65–75ch guideline, not "well inside" it as an earlier draft of this file claimed. Not a real readability problem at this line-height, but worth knowing precisely rather than assuming.
 - **Label** (400, 0.72rem, uppercase, 0.03–0.04em tracking): `registry-fields dt`, `.eyebrow`, table headers, status tags — always mono, always the "this is metadata" register.
+- **Small-lede** (400, 0.95rem, 1.6): a tightened variant of body used for secondary intro paragraphs on dense pages (`.lede` with an inline size override, `.doc-topic dd`) — one step down from body, still prose, not metadata.
+- **Caption** (400, 0.8rem, mono, `--slate`): inline and standalone annotations on data-heavy pages (row-level asides, methodology notes, table footnotes — e.g. `dovod-290-po-godam.html`). Always mono to read as "supplementary note," not body prose. Two near-identical sizes (0.78rem/0.82rem) used to coexist here by accident; consolidated to this single 0.8rem tier so the page carries three distinct, deliberately-spaced sizes (body 17px → small-lede 15.2px → caption 12.8px) instead of three that were nearly indistinguishable.
 
 ### Named Rules
 **The Serif-Never-Body Rule.** The display serif appears only in h1–h3 and `.site-title`. Body copy is always the system sans. Mixing them elsewhere would blur the "letterhead vs. letter" distinction the whole system depends on.
