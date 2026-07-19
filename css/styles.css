@@ -535,6 +535,13 @@ main {
   font-size: 0.92rem;
 }
 
+.plain-summary {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  margin: 0 0 var(--space-2);
+}
+
 /* ── Checklist / lists ────────────────────────────────────── */
 
 .checklist { padding-left: 1.2em; }
