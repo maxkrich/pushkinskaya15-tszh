@@ -9,3 +9,8 @@ Sources/
 
 # impeccable live-mode session journal (local, ephemeral, not project source).
 .impeccable/live/sessions/
+
+# Session log journal (private working notes — may reference redaction methodology
+# with real names encountered in raw sources). Never publish; CONTENT-PLAN.md and
+# CLAUDE.md hold everything meant to be public.
+CC-Session-Logs/
