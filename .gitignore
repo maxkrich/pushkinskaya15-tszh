@@ -3,3 +3,9 @@
 # Raw source documents (unredacted originals — real names, not for publication).
 # Only the obezlichen copies under assets/documents/ are meant to be public.
 Sources/
+
+# Local Claude Code permission/hook settings — machine-specific, not shared config.
+.claude/settings.local.json
+
+# impeccable live-mode session journal (local, ephemeral, not project source).
+.impeccable/live/sessions/

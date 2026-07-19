@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-19T15:00:00Z",
+  "title": "Design System: ТСЖ «Пушкинская 15»",
+  "extensions": {
+    "colorMeta": {
+      "navy": { "role": "primary", "displayName": "Registry Navy", "canonical": "#24344D", "tonalRamp": ["#141414", "#191D24", "#1D2635", "#222F45", "#425065", "#7E8795", "#B9BEC5", "#F5F5F5"] },
+      "confirmed": { "role": "status", "displayName": "Confirmed Teal", "canonical": "#3E6259", "tonalRamp": ["#141414", "#202A28", "#2C413B", "#38574F", "#58776F", "#8CA19C", "#C1CBC8", "#F5F5F5"] },
+      "needs-check": { "role": "status", "displayName": "Needs-Check Ochre", "canonical": "#7A5C31", "tonalRamp": ["#141414", "#31291C", "#4E3D25", "#6B522D", "#8C724D", "#AF9E85", "#D2C9BD", "#F5F5F5"] },
+      "pending": { "role": "status", "displayName": "Pending Slate", "canonical": "#5B6472", "tonalRamp": ["#141414", "#282B2F", "#3D424A", "#515965", "#717985", "#9DA2AA", "#C9CCD0", "#F5F5F5"] },
+      "paper-alt": { "role": "neutral", "displayName": "Filed-Record Paper", "canonical": "#EFEFEC", "tonalRamp": ["#141414", "#535352", "#91918F", "#D0D0CD", "#F0F0ED", "#F2F2F0", "#F3F3F2", "#F5F5F5"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1E2328", "tonalRamp": ["#141414", "#17181A", "#1A1D1F", "#1D2125", "#3D4145", "#7A7D80", "#B8B9BA", "#F5F5F5"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Serif", "purpose": "H1–H3 and site title only — the letterhead register, never body copy." },
+      "body": { "displayName": "System Sans", "purpose": "All prose, at 17px for readability on a mostly-mobile, sometimes-older audience." },
+      "label": { "displayName": "Mono Label", "purpose": "Status tags, registry-field labels, stamps, citations — the site-wide 'this is verifiable' signal." }
+    },
+    "shadows": [
+      { "name": "popover", "value": "0 6px 20px rgba(0, 0, 0, 0.22)", "purpose": "The citation-preview popover only — the one element that is genuinely floating above the page." }
+    ],
+    "motion": [
+      { "name": "hero-stagger", "value": "0.4s ease-out, 70ms stagger per card", "purpose": "One-time entrance for the four homepage stat cards. Gated behind prefers-reduced-motion: no-preference; nothing renders for reduced-motion users." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "480px" },
+      { "name": "tablet", "value": "560px" },
+      { "name": "nav-collapse", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The only conversion-style action on the site (homepage hero, two total buttons on the whole project).",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Посмотреть полную картину</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-size: 0.98rem; border: 1px solid #24344D; background: #24344D; color: #F7F7F5; transition: background 0.15s ease; } .ds-btn-primary:hover { background: #1A2637; } .ds-btn-primary:focus-visible { outline: 3px solid #24344D; outline-offset: 2px; }"
+    },
+    {
+      "name": "Status Tag",
+      "kind": "chip",
+      "refersTo": "status-tag-confirmed",
+      "description": "Pill with a leading dot in currentColor, always paired with a plain-language label — never color alone. Swap background/text for needs-check (#F0E9DD/#7A5C31) or pending (#E7E7E4/#5B6472).",
+      "html": "<span class=\"ds-status-tag\">подтверждено</span>",
+      "css": ".ds-status-tag { display: inline-flex; align-items: center; gap: 6px; font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 0.82rem; padding: 3px 10px 3px 8px; border-radius: 999px; background: #E7EEEB; color: #3E6259; } .ds-status-tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }"
+    },
+    {
+      "name": "Registry Card",
+      "kind": "card",
+      "refersTo": "registry-card",
+      "description": "The signature component. A status record rendered as a filed document: left accent stripe carries the status color, top-right stamp chip carries a case letter (№А), fields render as a form-like dt/dd grid. The homepage's four hero stat cards are a compact variant of this exact shape.",
+      "html": "<article class=\"ds-registry-card\"><span class=\"ds-registry-stamp\">№А</span><h3>Полномочия органов управления</h3><dl class=\"ds-registry-fields\"><dt>норма</dt><dd>Правление избирается на два года.</dd><dt>статус</dt><dd><span class=\"ds-status-tag\">подтверждено</span></dd></dl></article>",
+      "css": ".ds-registry-card { position: relative; background: #EFEFEC; border-left: 4px solid #3E6259; border-radius: 0 4px 4px 0; padding: 24px; } .ds-registry-stamp { position: absolute; top: 24px; right: 24px; font-family: ui-monospace, monospace; font-size: 0.72rem; color: #5B6472; background: #F7F7F5; border: 1px solid #D8D9D4; padding: 2px 8px; border-radius: 2px; } .ds-registry-card h3 { margin: 0 64px 16px 0; font-size: 1.05rem; font-family: ui-serif, Georgia, serif; font-weight: 600; color: #1E2328; } .ds-registry-fields { display: grid; grid-template-columns: 8.5em 1fr; gap: 8px 16px; margin: 0; } .ds-registry-fields dt { font-family: ui-monospace, monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: #5B6472; } .ds-registry-fields dd { margin: 0; font-size: 0.96rem; color: #1E2328; } .ds-status-tag { display: inline-flex; align-items: center; gap: 6px; font-family: ui-monospace, monospace; font-size: 0.82rem; padding: 3px 10px 3px 8px; border-radius: 999px; background: #E7EEEB; color: #3E6259; } .ds-status-tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }"
+    },
+    {
+      "name": "Accent Card",
+      "kind": "card",
+      "refersTo": "claim-box",
+      "description": "Registry Card's plainer sibling, minus the stamp — used for quoted claims (slate accent, italic), verdicts (navy accent), and source callouts (teal accent).",
+      "html": "<div class=\"ds-verdict-box\"><p>Вывод, к которому приводит сопоставление документов.</p></div>",
+      "css": ".ds-verdict-box { background: #EFEFEC; border-left: 4px solid #24344D; padding: 24px; } .ds-verdict-box p { margin: 0; color: #1E2328; }"
+    },
+    {
+      "name": "Details Disclosure",
+      "kind": "custom",
+      "refersTo": "details-summary",
+      "description": "Native <details>/<summary> with the browser triangle replaced by a mono +/− — used for FAQ and year-by-year data breakdowns, keeping the site fully functional without JS.",
+      "html": "<details class=\"ds-details\"><summary>Вопрос или заголовок года</summary><p>Развёрнутое содержимое.</p></details>",
+      "css": ".ds-details { border-bottom: 1px solid #D8D9D4; padding: 16px 0; } .ds-details summary { font-weight: 600; cursor: pointer; min-height: 44px; display: flex; align-items: center; list-style: none; color: #1E2328; } .ds-details summary::-webkit-details-marker { display: none; } .ds-details summary::before { content: '+'; font-family: ui-monospace, monospace; font-weight: 400; color: #5B6472; width: 1em; flex-shrink: 0; } .ds-details[open] summary::before { content: '−'; } .ds-details p { margin-top: 16px; color: #383F47; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Registry Desk",
+    "overview": "Not a landing page and not a blog — a public records office. Every claim on this site behaves like a filed document: it has a status stamp, a source, and a place it can be checked against. The visual system is built to feel like an official reference desk, calm and procedural, the kind of place where nobody raises their voice because the paperwork speaks for itself. Colour is used the way a records office uses colour: sparingly, and only to carry a status code, never to persuade. This system explicitly rejects the warm-cream AI-landing-page look (crema background, terracotta accent, serif hero) and rejects alarmism (red, exclamation marks, urgent iconography). Urgency here comes from the numbers themselves — a five-year gap, a nine-figure debt — never from the chrome around them.",
+    "keyCharacteristics": [
+      "Cool, neutral paper — not warm cream, not stark white",
+      "One accent (navy) used for links, primary actions, and the norm side of every norm-vs-fact comparison",
+      "Three muted status colors are the only other color in the system and never leave their lane",
+      "Mono type signals verifiable/citable content throughout",
+      "Zero decorative motion; the one animation is gated behind prefers-reduced-motion"
+    ],
+    "rules": [
+      { "name": "The Status-Only Color Rule", "body": "Confirmed/needs-check/pending are the only colors besides navy and neutrals, always paired with a text label, never color alone.", "section": "colors" },
+      { "name": "The Dark Mode Is Not an Afterthought Rule", "body": "Every token has a defined dark counterpart; navy inverts to a lighter tone so it still reads as the accent.", "section": "colors" },
+      { "name": "The Serif-Never-Body Rule", "body": "The display serif appears only in h1–h3 and the site title. Body copy is always the system sans.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Everything at rest is flat; shadow is reserved for the one element genuinely floating above the page (the citation popover).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the status vocabulary to exactly three colors, always paired with a text label",
+      "Do use the mono face as the verifiable-content signal consistently",
+      "Do reuse the registry-card accent-stripe-plus-stamp language for any new filed-fact element",
+      "Do gate any new motion behind prefers-reduced-motion and keep it to one deliberate moment per page"
+    ],
+    "donts": [
+      "Don't introduce warm-cream / terracotta / crema tones anywhere",
+      "Don't use full-saturation red, green, or amber for status, ever",
+      "Don't treat the border-left accent stripe as a generic anti-pattern and remove it — it is this project's deliberate signature element",
+      "Don't add a hero-metric big-number-plus-gradient block",
+      "Don't add shadows to cards or buttons to fake depth",
+      "Don't add an uppercase tracked eyebrow above every section as pure decoration"
+    ]
+  }
+}
