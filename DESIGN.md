@@ -124,7 +124,7 @@ A cool, desaturated palette — paper is grey-white, not cream; the only saturat
 - **Display / H1** (600, `clamp(1.75rem, 5vw, 2.5rem)`, 1.2 line-height): page titles only.
 - **Headline / H2** (600, `clamp(1.35rem, 3.5vw, 1.75rem)`, 1.2): section breaks.
 - **Title / H3** (600, 1.15rem, 1.2): card and sub-section titles; inside `.registry-card`, right-margin-cleared to leave room for the stamp.
-- **Body** (400, 17px, 1.6): all prose. No max-width rule enforced in CSS today, but `main` is capped at 760px, which keeps lines well inside 75ch.
+- **Body** (400, 17px, 1.6): all prose. `main` caps at 760px (712px after padding), which works out to roughly 76–84ch at this font's average character width — at or just past the 65–75ch guideline, not "well inside" it as an earlier draft of this file claimed. Not a real readability problem at this line-height, but worth knowing precisely rather than assuming.
 - **Label** (400, 0.72rem, uppercase, 0.03–0.04em tracking): `registry-fields dt`, `.eyebrow`, table headers, status tags — always mono, always the "this is metadata" register.
 
 ### Named Rules
