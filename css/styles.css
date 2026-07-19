@@ -1,0 +1,621 @@
+/* ТСЖ «Пушкинская 15» — токены и базовый layout
+   См. contentplan раздел 7.1/7.2: спокойный, административный/справочный тон.
+   Сайт работает без JS и без внешних сетевых зависимостей — только системные шрифты. */
+
+:root {
+  --paper: #F7F7F5;
+  --paper-alt: #EFEFEC;
+  --ink: #1E2328;
+  --ink-soft: #383F47;
+  --navy: #24344D;
+  --navy-hover: #1A2637;
+  --slate: #5B6472;
+  --slate-line: #D8D9D4;
+  --confirmed: #3E6259;
+  --confirmed-bg: #E7EEEB;
+  --needs-check: #7A5C31;
+  --needs-check-bg: #F0E9DD;
+  --pending: #5B6472;
+  --pending-bg: #E7E7E4;
+
+  --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+
+  --radius: 4px;
+  --max-width: 760px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #15181B;
+    --paper-alt: #1C2024;
+    --ink: #EDEEEC;
+    --ink-soft: #C7CBCF;
+    --navy: #7C93B8;
+    --navy-hover: #A0B4D4;
+    --slate: #9AA2AC;
+    --slate-line: #33373C;
+    --confirmed: #7FB6A6;
+    --confirmed-bg: #1E2B27;
+    --needs-check: #D3AA6E;
+    --needs-check-bg: #2E271A;
+    --pending: #9AA2AC;
+    --pending-bg: #24272B;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--navy); }
+a:hover { color: var(--navy-hover); }
+.law-link { text-decoration-style: dotted; text-underline-offset: 2px; }
+.law-link::after { content: " ↗"; font-size: 0.8em; }
+
+/* ── Tip: hover/focus excerpt preview for citations ──────────
+   Trigger is a separate focusable button, not the link itself:
+   on touch, tapping the link would navigate before any preview
+   could show; tapping the ⓘ button focuses without navigating. */
+.tip { position: relative; display: inline; white-space: nowrap; }
+.tip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1;
+  color: var(--slate);
+  background: var(--paper-alt);
+  border: 1px solid var(--slate-line);
+  border-radius: 50%;
+  cursor: help;
+  vertical-align: text-top;
+  padding: 0;
+}
+.tip-btn:hover, .tip-btn:focus-visible {
+  color: var(--paper);
+  background: var(--navy);
+  border-color: var(--navy);
+  outline: none;
+}
+.tip-content {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  top: 100%;
+  margin-top: 8px;
+  width: max-content;
+  max-width: min(340px, 84vw);
+  white-space: normal;
+  background: var(--navy);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  pointer-events: none;
+}
+.tip-content::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 10px;
+  border: 6px solid transparent;
+  border-bottom-color: var(--navy);
+}
+.tip-content cite {
+  display: block;
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: normal;
+  color: var(--paper-alt);
+  opacity: 0.75;
+}
+.tip:hover .tip-content,
+.tip:focus-within .tip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+@media (max-width: 480px) {
+  .tip-content { left: auto; right: 0; }
+}
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  line-height: 1.2;
+  font-weight: 600;
+}
+h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); margin: 0 0 var(--space-2); }
+h2 { font-size: clamp(1.35rem, 3.5vw, 1.75rem); margin: var(--space-5) 0 var(--space-2); }
+h3 { font-size: 1.15rem; margin: var(--space-3) 0 var(--space-1); }
+
+p { margin: 0 0 var(--space-2); }
+
+.mono { font-family: var(--font-mono); }
+
+/* ── Header / nav ─────────────────────────────────────────── */
+
+.site-header {
+  border-bottom: 1px solid var(--slate-line);
+  background: var(--paper);
+}
+.site-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+.site-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+  text-decoration: none;
+  margin-right: auto;
+}
+.site-title small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--slate);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: var(--space-1) 2px;
+  display: inline-block;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.site-nav a:hover, .site-nav a[aria-current="page"] {
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+/* ── Layout ───────────────────────────────────────────────── */
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-3) var(--space-6);
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.updated {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--slate);
+  margin: -8px 0 var(--space-3);
+}
+
+.hero {
+  border-bottom: 1px solid var(--slate-line);
+  background: var(--paper-alt);
+}
+.hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-3) var(--space-5);
+}
+.hero h1 { max-width: 18ch; }
+.hero .lede { max-width: 52ch; }
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-size: 0.98rem;
+  border: 1px solid var(--navy);
+}
+.btn-primary { background: var(--navy); color: var(--paper); }
+.btn-primary:hover { background: var(--navy-hover); color: var(--paper); }
+.btn-secondary { background: transparent; color: var(--navy); }
+.btn-secondary:hover { background: var(--paper-alt); }
+
+/* ── Блок «Если коротко» (аномалии на главной) ───────────── */
+
+.anomaly-strip {
+  margin-top: var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+@media (max-width: 640px) {
+  .anomaly-strip { grid-template-columns: 1fr; }
+}
+.anomaly-item {
+  position: relative;
+  background: var(--paper-alt);
+  border-left: 4px solid var(--pending);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: var(--space-3);
+}
+.anomaly-item[data-status="confirmed"] { border-left-color: var(--confirmed); }
+.anomaly-item[data-status="needs-check"] { border-left-color: var(--needs-check); }
+.anomaly-item[data-status="pending"] { border-left-color: var(--pending); }
+.anomaly-item .stat {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--navy);
+  margin: 0 var(--space-5) 4px 0;
+}
+.anomaly-item p {
+  margin: 0 0 6px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.anomaly-item a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+.anomaly-item a:hover { text-decoration: underline; }
+
+/* One deliberate load-in moment, not scattered hover effects.
+   Gated behind no-preference so reduced-motion users just see
+   the cards in place with no animation at all. */
+@media (prefers-reduced-motion: no-preference) {
+  .anomaly-item { animation: anomaly-in 0.4s ease-out both; }
+  .anomaly-item:nth-child(1) { animation-delay: 0ms; }
+  .anomaly-item:nth-child(2) { animation-delay: 70ms; }
+  .anomaly-item:nth-child(3) { animation-delay: 140ms; }
+  .anomaly-item:nth-child(4) { animation-delay: 210ms; }
+  @keyframes anomaly-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+.pointer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+@media (max-width: 640px) {
+  .pointer-grid { grid-template-columns: 1fr; }
+}
+.pointer {
+  border-top: 1px solid var(--slate-line);
+  padding-top: var(--space-2);
+}
+.pointer .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--slate);
+  margin: 0 0 var(--space-1);
+}
+.pointer h3 { margin-top: 0; }
+.pointer p:not(.eyebrow) { color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ── Карточка-реестр (signature element) ─────────────────── */
+
+.registry-card {
+  position: relative;
+  background: var(--paper-alt);
+  border-left: 4px solid var(--pending);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-3);
+  margin: 0 0 var(--space-3);
+}
+.registry-card[data-status="confirmed"] { border-left-color: var(--confirmed); }
+.registry-card[data-status="needs-check"] { border-left-color: var(--needs-check); }
+.registry-card[data-status="pending"] { border-left-color: var(--pending); }
+
+.registry-stamp {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--slate);
+  letter-spacing: 0.03em;
+  background: var(--paper);
+  border: 1px solid var(--slate-line);
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+.registry-card h3 {
+  margin: 0 var(--space-6) var(--space-2) 0;
+  font-size: 1.05rem;
+}
+
+.registry-fields {
+  display: grid;
+  grid-template-columns: 8.5em 1fr;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+}
+.registry-fields dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--slate);
+  padding-top: 3px;
+}
+.registry-fields dd {
+  margin: 0;
+  font-size: 0.96rem;
+}
+@media (max-width: 560px) {
+  .registry-fields { grid-template-columns: 1fr; }
+  .registry-fields dt { padding-top: var(--space-2); }
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+}
+.status-tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.status-tag[data-status="confirmed"] { background: var(--confirmed-bg); color: var(--confirmed); }
+.status-tag[data-status="needs-check"] { background: var(--needs-check-bg); color: var(--needs-check); }
+.status-tag[data-status="pending"] { background: var(--pending-bg); color: var(--pending); }
+
+.registry-link {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-size: 0.92rem;
+}
+
+/* ── Checklist / lists ────────────────────────────────────── */
+
+.checklist { padding-left: 1.2em; }
+.checklist li { margin-bottom: var(--space-1); }
+
+/* ── Tables ───────────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin: var(--space-2) 0 var(--space-4);
+}
+th, td {
+  text-align: left;
+  padding: var(--space-2) var(--space-2) var(--space-2) 0;
+  border-bottom: 1px solid var(--slate-line);
+  vertical-align: top;
+}
+th { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--slate); font-weight: 500; }
+
+/* Faint row tint on dense tables — lets the eye scan a 40-row
+   table for "вне перечня"/"спорно" without reading every line. */
+table tr:has(> td .status-tag[data-status="needs-check"]) { background: var(--needs-check-bg); }
+table tr:has(> td .status-tag[data-status="pending"]) { background: var(--pending-bg); }
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+
+details {
+  border-bottom: 1px solid var(--slate-line);
+  padding: var(--space-2) 0;
+}
+summary {
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before {
+  content: "+";
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--slate);
+  width: 1em;
+  flex-shrink: 0;
+}
+details[open] summary::before { content: "−"; }
+details p { margin-top: var(--space-2); color: var(--ink-soft); }
+
+/* ── Сводная таблица «норма vs факт» ─────────────────────── */
+
+.compare-table-wrap {
+  overflow-x: auto;
+  margin: var(--space-2) 0 var(--space-5);
+  border: 1px solid var(--slate-line);
+  border-radius: var(--radius);
+}
+.compare-table {
+  margin: 0;
+  min-width: 640px;
+}
+.compare-table th, .compare-table td {
+  padding: var(--space-2);
+  vertical-align: top;
+}
+.compare-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--paper-alt);
+}
+.compare-table td:first-child a {
+  font-weight: 600;
+  text-decoration: none;
+}
+.compare-table td:first-child a:hover { text-decoration: underline; }
+.compare-table tbody tr:hover { background: var(--paper-alt); }
+.compare-table .status-tag { white-space: nowrap; }
+
+/* ── Довод / разбор блок ──────────────────────────────────── */
+
+.claim-box {
+  background: var(--paper-alt);
+  border-left: 4px solid var(--slate);
+  padding: var(--space-3);
+  margin: var(--space-2) 0 var(--space-4);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.claim-box p { margin: 0; }
+
+.verdict-box {
+  background: var(--paper-alt);
+  border-left: 4px solid var(--navy);
+  padding: var(--space-3);
+  margin: var(--space-4) 0;
+}
+.verdict-box p:last-child { margin-bottom: 0; }
+
+/* ── Библиотека документов ────────────────────────────────── */
+
+.doc-topic {
+  border-bottom: 1px solid var(--slate-line);
+  padding: var(--space-2) 0;
+}
+.doc-topic dt { font-weight: 600; }
+.doc-topic dd { margin: 4px 0 0; color: var(--ink-soft); font-size: 0.95rem; }
+.doc-topic dd.pending {
+  display: inline-block;
+  font-style: normal;
+  color: var(--slate);
+  font-size: 0.85rem;
+  padding: 5px 12px;
+  border: 1px dashed var(--slate-line);
+  border-radius: var(--radius);
+}
+
+.callout {
+  background: var(--confirmed-bg);
+  border-left: 4px solid var(--confirmed);
+  padding: var(--space-3);
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: 0.95rem;
+}
+
+/* ── График (норма vs факт) ───────────────────────────────── */
+
+.chart-wrap {
+  margin: var(--space-2) 0 var(--space-3);
+  max-width: 640px;
+}
+.chart-svg { width: 100%; height: auto; }
+.chart-grid { stroke: var(--slate-line); stroke-width: 1; }
+.chart-axis-label { font-family: var(--font-mono); font-size: 11px; fill: var(--slate); }
+.chart-line { stroke-width: 2.5; }
+.chart-line-required { stroke: var(--navy); }
+.chart-line-actual { stroke: var(--needs-check); stroke-dasharray: 5 4; }
+.chart-dot-required { fill: var(--navy); }
+.chart-dot-actual { fill: var(--needs-check); }
+.chart-legend {
+  display: flex;
+  gap: var(--space-4);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-legend .swatch { width: 18px; height: 3px; display: inline-block; }
+.chart-legend .swatch-required { background: var(--navy); }
+.chart-legend .swatch-actual { background: var(--needs-check); }
+
+/* ── Годовой разбор (details) ────────────────────────────── */
+
+.year-detail {
+  border: 1px solid var(--slate-line);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.year-detail summary {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.year-detail table { font-size: 0.92rem; }
+.year-detail h3 { font-size: 1rem; margin-top: var(--space-3); }
+
+/* ── Footer ───────────────────────────────────────────────── */
+
+.site-footer {
+  border-top: 1px solid var(--slate-line);
+  margin-top: var(--space-6);
+}
+.site-footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3);
+  font-size: 0.85rem;
+  color: var(--slate);
+}

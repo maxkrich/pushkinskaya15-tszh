@@ -1,0 +1,5 @@
+.DS_Store
+
+# Raw source documents (unredacted originals — real names, not for publication).
+# Only the obezlichen copies under assets/documents/ are meant to be public.
+Sources/
