@@ -316,6 +316,53 @@ main {
 .btn-secondary { background: transparent; color: var(--navy); }
 .btn-secondary:hover { background: var(--paper-alt); }
 
+/* ── Полоса статуса (наглядность на первом экране) ─────────── */
+
+.status-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 14px;
+  margin-bottom: var(--space-4);
+  background: var(--paper);
+  border: 1px solid var(--slate-line);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+.status-ribbon-text {
+  color: var(--ink-soft);
+  flex: 1 1 320px;
+}
+.status-ribbon-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.status-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+}
+.status-dot[data-status="confirmed"] { background: var(--confirmed-bg); color: var(--confirmed); border-color: var(--confirmed); }
+.status-dot[data-status="needs-check"] { background: var(--needs-check-bg); color: var(--needs-check); border-color: var(--needs-check); }
+.status-dot[data-status="pending"] { background: var(--pending-bg); color: var(--pending); border-color: var(--pending); }
+.status-dot:hover, .status-dot:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
 /* ── Блок «Если коротко» (аномалии на главной) ───────────── */
 
 .anomaly-strip {
