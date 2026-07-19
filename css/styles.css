@@ -31,6 +31,9 @@
 
   --radius: 4px;
   --max-width: 760px;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: 120ms var(--ease-out-quart);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -66,7 +69,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--navy); }
+a { color: var(--navy); transition: color var(--transition-fast); }
 a:hover { color: var(--navy-hover); }
 .law-link { text-decoration-style: dotted; text-underline-offset: 2px; }
 .law-link::after { content: " ↗"; font-size: 0.8em; }
@@ -94,6 +97,7 @@ a:hover { color: var(--navy-hover); }
   cursor: help;
   vertical-align: text-top;
   padding: 0;
+  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
 }
 /* Invisible 44x44 hit area — the visible dot stays 18px so 30
    instances across the site don't get visually noisy. */
@@ -252,6 +256,7 @@ p { margin: 0 0 var(--space-2); }
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+  transition: color var(--transition-fast);
 }
 .site-nav a:hover, .site-nav a[aria-current="page"] {
   color: var(--navy);
@@ -310,6 +315,7 @@ main {
   text-decoration: none;
   font-size: 0.98rem;
   border: 1px solid var(--navy);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 .btn-primary { background: var(--navy); color: var(--paper); }
 .btn-primary:hover { background: var(--navy-hover); color: var(--paper); }
@@ -410,7 +416,7 @@ main {
    Gated behind no-preference so reduced-motion users just see
    the cards in place with no animation at all. */
 @media (prefers-reduced-motion: no-preference) {
-  .anomaly-item { animation: anomaly-in 0.4s ease-out both; }
+  .anomaly-item { animation: anomaly-in 0.4s var(--ease-out-quart) both; }
   .anomaly-item:nth-child(1) { animation-delay: 0ms; }
   .anomaly-item:nth-child(2) { animation-delay: 70ms; }
   .anomaly-item:nth-child(3) { animation-delay: 140ms; }
@@ -568,6 +574,7 @@ summary {
   display: flex;
   align-items: center;
   list-style: none;
+  transition: color var(--transition-fast);
 }
 summary::-webkit-details-marker { display: none; }
 summary::before {
@@ -577,8 +584,11 @@ summary::before {
   color: var(--slate);
   width: 1em;
   flex-shrink: 0;
+  transition: color var(--transition-fast);
 }
 details[open] summary::before { content: "−"; }
+summary:hover,
+summary:hover::before { color: var(--navy); }
 details p { margin-top: var(--space-2); color: var(--ink-soft); }
 
 /* ── Сводная таблица «норма vs факт» ─────────────────────── */
@@ -616,6 +626,10 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
 .compare-table thead th:first-child {
   z-index: 2;
   background: var(--paper-alt);
+}
+.compare-table tbody tr,
+.compare-table tbody tr td:first-child {
+  transition: background-color var(--transition-fast);
 }
 .compare-table tbody tr:hover td:first-child {
   background: var(--paper-alt);
@@ -679,6 +693,8 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
   margin: var(--space-2) 0 var(--space-4);
   font-size: 0.95rem;
 }
+.callout[data-status="pending"] { background: var(--pending-bg); border-left-color: var(--pending); }
+.callout[data-status="needs-check"] { background: var(--needs-check-bg); border-left-color: var(--needs-check); }
 
 .dovod-index {
   background: var(--paper-alt);
@@ -716,9 +732,9 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
 .chart-axis-label { font-family: var(--font-mono); font-size: 11px; fill: var(--slate); }
 .chart-line { stroke-width: 2.5; }
 .chart-line-required { stroke: var(--navy); }
-.chart-line-actual { stroke: var(--needs-check); stroke-dasharray: 5 4; }
+.chart-line-actual { stroke: var(--slate); stroke-dasharray: 5 4; }
 .chart-dot-required { fill: var(--navy); }
-.chart-dot-actual { fill: var(--needs-check); }
+.chart-dot-actual { fill: var(--slate); }
 .chart-legend {
   display: flex;
   gap: var(--space-4);
