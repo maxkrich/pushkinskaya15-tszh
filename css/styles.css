@@ -17,6 +17,7 @@
   --needs-check-bg: #F0E9DD;
   --pending: #5B6472;
   --pending-bg: #E7E7E4;
+  --tip-cite: #C7CBCF;
 
   --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -52,6 +53,7 @@
     --needs-check-bg: #2E271A;
     --pending: #9AA2AC;
     --pending-bg: #24272B;
+    --tip-cite: #1A2637;
   }
 }
 
@@ -149,8 +151,7 @@ a:hover { color: var(--navy-hover); }
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-style: normal;
-  color: var(--paper-alt);
-  opacity: 0.75;
+  color: var(--tip-cite);
 }
 .tip:hover .tip-content,
 .tip:focus-within .tip-content {
@@ -281,6 +282,15 @@ main {
   color: var(--ink-soft);
 }
 
+.small-lede { font-size: 0.95rem; }
+
+.caption {
+  font-size: 0.8rem;
+  color: var(--slate);
+}
+
+.dim { color: var(--slate); }
+
 .updated {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -297,14 +307,19 @@ main {
   margin: 0 auto;
   padding: var(--space-6) var(--space-3) var(--space-5);
 }
-.hero h1 { max-width: 18ch; }
+.hero h1 {
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
 .hero .lede { max-width: 52ch; }
 
 .cta-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 .btn {
   display: inline-flex;
@@ -338,8 +353,14 @@ main {
 }
 .status-ribbon-text {
   color: var(--ink-soft);
-  flex: 1 1 320px;
+  flex: 1 1 220px;
 }
+.status-ribbon-summary {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+.status-ribbon-summary .status-tag { white-space: nowrap; }
 .status-ribbon-dots {
   display: flex;
   gap: 6px;
@@ -376,12 +397,15 @@ main {
   margin: var(--space-4) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-3);
 }
 @media (max-width: 640px) {
   .anomaly-strip { grid-template-columns: 1fr; }
 }
+/* The lead item (worst/most vivid finding) spans the full row — a structural,
+   not chromatic, way of signalling severity: see impeccable layout audit. */
+.anomaly-item-lead { grid-column: 1 / -1; }
 .anomaly-item {
   position: relative;
   background: var(--paper-alt);
@@ -429,7 +453,7 @@ main {
 
 .pointer-grid {
   list-style: none;
-  margin: var(--space-5) 0 0;
+  margin: var(--space-4) 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -674,6 +698,7 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
   margin: var(--space-4) 0;
 }
 .verdict-box p:last-child { margin-bottom: 0; }
+.verdict-box h2:first-child { margin-top: 0; }
 
 /* ── Библиотека документов ────────────────────────────────── */
 
@@ -702,6 +727,10 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
 }
 .callout[data-status="pending"] { background: var(--pending-bg); border-left-color: var(--pending); }
 .callout[data-status="needs-check"] { background: var(--needs-check-bg); border-left-color: var(--needs-check); }
+.callout p:last-child { margin-bottom: 0; }
+/* Extra breathing room where a callout follows the anomaly grid directly —
+   a distinct module deserves more than the default paragraph gap. */
+.anomaly-strip + .callout { margin-top: var(--space-4); }
 
 .dovod-index {
   background: var(--paper-alt);
@@ -733,8 +762,12 @@ details p { margin-top: var(--space-2); color: var(--ink-soft); }
 .chart-wrap {
   margin: var(--space-2) 0 var(--space-3);
   max-width: 640px;
+  overflow-x: auto;
 }
-.chart-svg { width: 100%; height: auto; }
+/* min-width keeps the in-SVG axis labels at their true 11px size instead of
+   shrinking below legibility when the viewBox scales down on narrow phones;
+   the wrapper scrolls horizontally rather than the text getting smaller. */
+.chart-svg { width: 100%; min-width: 640px; height: auto; }
 .chart-grid { stroke: var(--slate-line); stroke-width: 1; }
 .chart-axis-label { font-family: var(--font-mono); font-size: 11px; fill: var(--slate); }
 .chart-line { stroke-width: 2.5; }
