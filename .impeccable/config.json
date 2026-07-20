@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "css/styles.css"
+        ],
+        "createdAt": "2026-07-19T20:43:25.473Z",
+        "reason": "Registry-card accent stripe is the site's documented signature element (DESIGN.md), confirmed intentional in an earlier design pass"
+      }
+    ]
+  }
+}
